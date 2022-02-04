@@ -1,6 +1,9 @@
 package Clases;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,26 +22,23 @@ public class Rol {
 	Conexion C = new Conexion();
 	int rows;
 	
-	public int getIdRol() {
-		return idRol;
-	}
+	public int getIdRol() {return idRol;}
 	public void setIdRol(int idRol) {
 		this.idRol = idRol;
 	}
-	public String getNombreRol() {
-		return nombreRol;
-	}
+	public String getNombreRol() {return nombreRol;}
 	public void setNombreRol(String nombreRol) {
 		this.nombreRol = nombreRol;
 	}
 	
 	public int CrearRol(Rol Rol) throws SQLException {
-		sql = "INSERT INTO roles(IdRol, NombreRol) VALUES (?)";
+		sql = "INSERT INTO roles(NombreRol) VALUES (?)";
 		
 		try {
 			
 			con = C.conectar();
 			ps = con.prepareStatement(sql);
+			ps.setString(1, getNombreRol());
 			ps.executeUpdate(); 
 			ps.close();	
 			System.out.println("Se ejecuto la sentencia");
@@ -117,9 +117,10 @@ public class Rol {
 			r.setIdRol(rs.getInt("IdRol"));
 			r.setNombreRol(rs.getString("NombreRol"));
 			roles.add(r);
-			System.out.println("Se ejecuto la sentencia");
 		}
-		
+			ps.close();
+
+			System.out.println("Se ejecuto la sentencia");
 		}catch (Exception e) {
 			System.out.println("Error "+e.getMessage());
 		}
@@ -131,4 +132,25 @@ public class Rol {
 		
 	}
 
+	public int Actualizar (Rol rol) throws SQLException {
+		sql = "update roles set NombreRol=?"+"where IdRol="+rol.getIdRol();
+		Rol r= new Rol();
+
+		try {
+
+			con = C.conectar();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, rol.getNombreRol());
+			ps.executeUpdate();
+			ps.close();
+			System.out.println("Se ejecuto la sentencia");
+
+		}catch(Exception e) {
+			System.out.println("Error "+e.getMessage());
+		}
+		finally {
+			con.close();
+		}
+		return rows;
+	}
 }
