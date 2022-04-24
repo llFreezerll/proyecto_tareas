@@ -1,8 +1,8 @@
-<%@include file="Header.jsp"%>
+<%@include file="Header2.jsp"%>
 
 
 <body>
-
+<div style="margin: 20px">
 <h1>Estudiantes</h1>
 
 <table class="table table-hover table-bordered">
@@ -42,7 +42,9 @@
 
   </c:forEach>
 
+</div>
+
 </body>
 
 
-<%@include file="Footer.jsp"%>
+<%@include file="Footer2.jsp"%>

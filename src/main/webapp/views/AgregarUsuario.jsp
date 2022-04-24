@@ -1,65 +1,82 @@
-<%@include file="Header.jsp"%>
+<%@include file="Header2.jsp"%>
+<%@ page contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="UTF-8" %>
 
 
 <body>
 
-<form method="post" action="UsuarioController?accion=Agregar">
 
-  <div>
-    <label for="Documento" >Documento</label>
-    <input type="text" name="Documento" id="Documento">
-  </div>
 
-  <div>
-    <label for="Nombre" >Nombre</label>
-    <input type="text" name="Nombre" id="Nombre">
-  </div>
+<div style="
+     width: 100%;
+     min-height: 50vh;
+     display: -webkit-box;
+     display: -webkit-flex;
+     display: -moz-box;
+     display: -ms-flexbox;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     align-items: center;
+     padding: 15px;">
 
-  <div>
-    <label for="Apellido" >Apellido</label>
-    <input type="text" name="Apellido" id="Apellido">
-  </div>
+  <form method="post" action="UsuarioController?accion=Agregar" >
 
-  <div>
-    <label for="Usuario" >Usuario</label>
-    <input type="text" name="Usuario" id="Usuario">
-  </div>
+    <div class="card text-center bg-secondary" style="width: 30rem;align-items: center;display: flex;">
+      <div class="card-header" style="color: #FFFFFF">
+        Agregar Usuario
+      </div>
+      <div class="card-body bg-light mb-3" style="width: 25rem;display: grid;">
+        <h5 class="card-title">Esta Agregando un nuevo Usuario</h5>
 
-  <div>
-    <label for="Contrasena" >Contraseña</label>
-    <input type="text" name="Contrasena" id="Contrasena">
-  </div>
+        <label for="Documento" class="card-text" >Documento</label>
+        <input class="card-text" type="text" name="Documento" id="Documento">
 
-  <div>
-    <label for="CorreoElectronico" >Correo Electronico</label>
-    <input type="text" name="CorreoElectronico" id="CorreoElectronico">
-  </div>
+        <label for="Nombre" class="card-text" >Nombre</label>
+        <input class="card-text" type="text" name="Nombre" id="Nombre">
 
-  <div>
-    <label>Rol</label>
+        <label for="Apellido" class="card-text" >Apellido</label>
+        <input class="card-text" type="text" name="Apellido" id="Apellido">
+
+        <label for="Usuario" class="card-text" >Usuario</label>
+        <input class="card-text" type="text" name="Usuario" id="Usuario">
+
+        <label for="Contrasena" class="card-text" >Contraseña</label>
+        <input class="card-text" type="text" name="Contrasena" id="Contrasena">
+
+        <label for="CorreoElectronico" class="card-text" >Correo electronico</label>
+        <input class="card-text" type="text" name="CorreoElectronico" id="CorreoElectronico">
+
+        <label>Rol</label>
         <select class="" name="RolUsu">
           <option>Seleccione Usuario</option>
-            <c:forEach var="rol" items="${Roles}">
+          <c:forEach var="rol" items="${Roles}">
             <option value="${rol.idRol}">${rol.nombreRol}</option>
-            </c:forEach>
+          </c:forEach>
         </select>
-  </div>
 
-  <div>
-    <label for="Estado" >Estado</label>
-    <input type="checkbox" name="Estado" id="Estado" checked>
-  </div>
+        <div hidden>
+          <input hidden type="checkbox" name="Perfil" id="Perfil" value="false">
+          <div>
+            <label for="Estado" >Estado</label>
+            <input type="checkbox" name="Estado" id="Estado" value="true" checked>
+          </div>
+        </div>
 
-  <div>
-    <input hidden type="checkbox" name="Perfil" id="Perfil" value="false">
-  </div>
-  <button type="submit"> Agregar </button>
-  <a href="UsuarioController?accion=listar" > Cancelar </a>
+        <a style="padding: 3%">
+          <button type="submit" class="btn btn-primary"> Agregar Usuario </button></a>
+        <div>
+          <a class="btn btn-primary" href="UsuarioController?accion=listar"> Cancelar </a>
+        </div>
 
+      </div>
 
-</form>
+    </div>
+
+  </form>
+</div>
 
 </body>
 
 
-<%@include file="Footer.jsp"%>
+<%@include file="Footer2.jsp"%>

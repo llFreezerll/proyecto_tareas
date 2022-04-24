@@ -206,7 +206,7 @@ public class Usuarios {
 		}
 	}
 	public int Actualizar(Usuarios us) throws SQLException {
-		sql = "update usuarios set NombreUsuario=?,ApellidoUsuario=?,Usuario=?,Contrasena=?,documento=?,Estado=?,CorreoElectronico=?,FK_Rol=? "+"where idUsuario="+us.getIdUsuario();
+		sql = "update usuarios set NombreUsuario=?,ApellidoUsuario=?,Usuario=?,documento=?,Estado=?,CorreoElectronico=?,FK_Rol=? "+"where idUsuario="+us.getIdUsuario();
 
 		Usuarios Us= new Usuarios();
 
@@ -218,11 +218,10 @@ public class Usuarios {
 			ps.setString(1, us.getNombre());
 			ps.setString(2, us.getApellido());
 			ps.setString(3, us.getUsuario());
-			ps.setString(4, us.getContrasena());
-			ps.setString(5, us.getDocumento());
-			ps.setBoolean(6, us.getestado());
-			ps.setString(7, us.getCorreElectronico());
-			ps.setInt(8, us.getrol().getIdRol());
+			ps.setString(4, us.getDocumento());
+			ps.setBoolean(5, us.getestado());
+			ps.setString(6, us.getCorreElectronico());
+			ps.setInt(7, us.getrol().getIdRol());
 
 			ps.executeUpdate();
 			ps.close();

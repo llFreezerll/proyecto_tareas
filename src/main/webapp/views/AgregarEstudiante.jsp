@@ -1,7 +1,8 @@
-<%@include file="Header.jsp"%>
+<%@include file="Header2.jsp"%>
 
 
 <body>
+<div style="margin: 20px">
 <div class="estilo" align="center" style="margin-top: 30px">
   <div class="card border-success mb-3" style="max-width: 18rem;">
     <div class="card-header"><center> Agregar Estudiante </center></div>
@@ -13,18 +14,15 @@
           <input type="text" name="idUsuario" value="${User.idUsuario}" hidden/>
             <div style="padding-left: 60px">
               <div>
-                <label class="form-label" for="Documento" >Nombre</label>
-                <input type="text" class="form-control" name="Documento" id="Documento" value="${User.nombre}">
+                <label class="form-label" >Nombre: ${User.nombre}</label>
               </div>
 
               <div>
-                <label class="form-label" for="Nombre" >Apellido</label>
-                <input type="text" class="form-control" name="Nombre" id="Nombre" value="${User.apellido}">
+                <label class="form-label" >Apellido: ${User.apellido}</label>
               </div>
 
               <div>
-                <label class="form-label" for="Apellido" >Correo</label>
-                <input type="text" class="form-control" name="Apellido" id="Apellido" value="${User.correElectronico}">
+                <label class="form-label" >Correo: ${User.correElectronico}</label>
               </div>
 
               <div>
@@ -54,8 +52,8 @@
     </div>
   </div>
 </div>
-
+</div>
 </body>
 
 
-<%@include file="Footer.jsp"%>
+<%@include file="Footer2.jsp"%>

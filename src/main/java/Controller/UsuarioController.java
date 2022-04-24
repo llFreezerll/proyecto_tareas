@@ -63,7 +63,7 @@ public class UsuarioController extends HttpServlet {
                             if(user.getNombre()!=null && user.getestado()==true){
                                 System.out.println("Se encontro usuario");
                                 sesion.setAttribute("users", user);
-                                request.getRequestDispatcher("index.jsp").forward(request, response);
+                                request.getRequestDispatcher("views/IndexLogueado.jsp").forward(request, response);
                             }
                             else if (user.getNombre()!=null && user.getestado()==false){
                                 System.out.println("Se encontro usuario pero esta inactivo");
@@ -275,7 +275,6 @@ public class UsuarioController extends HttpServlet {
             Us.setNombre(request.getParameter("Nombre"));
             Us.setApellido(request.getParameter("Apellido"));
             Us.setUsuario(request.getParameter("Usuario"));
-            Us.setContrasena(request.getParameter("Contrasena"));
             Us.setCorreElectronico(request.getParameter("CorreoElectronico"));
 
             Rol r = new Rol();

@@ -11,6 +11,7 @@ public class Padres extends Usuarios {
 
 	private  int idPadre;
 	private int FKEstudiante;
+	private int FKPadre;
 	private Estudiantes estudiantes;
 	private Usuarios users;
 
@@ -34,15 +35,21 @@ public class Padres extends Usuarios {
 	public int getFKEstudiante() {return FKEstudiante;}
 	public void setFKEstudiante(int FKEstudiante) {this.FKEstudiante = FKEstudiante;}
 
+	public int getFKPadre() { return FKPadre; }
+
+	public void setFKPadre(int FKPadre) { this.FKPadre = FKPadre; }
+
 	public void ConsultarNotas() {
 		
 	}
+
+
 
 	public List ListarPadre() throws Exception{
 
 		List<Padres> Padre = new ArrayList<>();
 		List<Estudiantes> Estudiante = new ArrayList<>();
-		sql = "SELECT p.idPadres, u.documento, u.NombreUsuario, u.ApellidoUsuario, u.CorreoElectronico, us.documento, us.NombreUsuario, us.ApellidoUsuario, us.CorreoElectronico, cu.nombreCurso, cu.grupo FROM padres as p INNER JOIN usuarios AS u on p.FK_padre=u.idUsuario INNER JOIN estudiante on p.FK_Estudiante=estudiante.idEstudiante INNER JOIN usuarios as us on estudiante.FK_usuario = us.idUsuario INNER JOIN curso as cu on estudiante.FK_Curso=cu.idCurso;";
+		sql = "SELECT p.idPadres, u.documento, u.NombreUsuario, u.ApellidoUsuario, u.CorreoElectronico, us.documento, us.NombreUsuario, us.ApellidoUsuario, us.CorreoElectronico, cu.nombreCurso, cu.grupo, u.idUsuario, p.FK_padre FROM padres as p INNER JOIN usuarios AS u on p.FK_padre=u.idUsuario INNER JOIN usuarios as us on p.FK_Estudiante = us.idUsuario INNER JOIN estudiante as es on p.FK_Estudiante = es.FK_usuario INNER JOIN curso as cu on es.FK_Curso=cu.idCurso;";
 
 		try {
 
@@ -70,6 +77,8 @@ public class Padres extends Usuarios {
 				pa.getEstudiantes().getEstudiante().setCorreElectronico(rs.getString(9));
 				pa.getEstudiantes().getCurso().setNombreCurso(rs.getString(10));
 				pa.getEstudiantes().getCurso().setGrupo(rs.getString(11));
+				pa.getUsers().setIdUsuario(rs.getInt(12));
+				pa.setFKPadre(rs.getInt(13));
 
 				Padre.add(pa);
 
@@ -88,26 +97,20 @@ public class Padres extends Usuarios {
 
 	public int Agregar(Padres es) throws SQLException {
 		sql = "INSERT INTO padres (FK_Estudiante, FK_padre) VALUES (?,?)";
-		sql2= "update usuarios set perfilCreado=?" + " where idUsuario=" + es.getUsers().getIdUsuario();
 
 
 		try {
 
 			con = C.conectar();
 			ps = con.prepareStatement(sql);
-			ps2 = con.prepareStatement(sql2);
 
 			ps.setInt(1, es.getEstudiantes().getIdEstudiante());
 			ps.setInt(2, es.getUsers().getIdUsuario());
-			ps2.setBoolean(1, es.getUsers().getPerfilCreado());
 
 			System.out.println(sql);
-			System.out.println(sql2);
 
 			ps.executeUpdate();
-			ps2.executeUpdate();
 			ps.close();
-			ps2.close();
 			System.out.println("Se ejecuto la sentencia");
 
 		}catch(Exception e) {
@@ -118,5 +121,86 @@ public class Padres extends Usuarios {
 		}
 		return rows;
 	}
+
+	public void Eliminar(int id) throws SQLException {
+
+		sql = "DELETE FROM padres WHERE idPadres="+id;
+		try {
+
+			con = C.conectar();
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			ps.close();
+			System.out.println("Se ejecuto la sentencia");
+
+		}catch(Exception e){
+
+			System.out.println("Error "+e.getMessage());
+
+		}
+		finally {
+			con.close();
+		}
+	}
+
+	public int Actualizar(Padres Pa) throws SQLException {
+		sql = "update padres set FK_Estudiante=? "+"where idPadres="+Pa.getIdPadre();
+
+		Padres pa= new Padres();
+
+		try {
+
+			con = C.conectar();
+			ps = con.prepareStatement(sql);
+
+			ps.setInt(1, Pa.getFKEstudiante());
+
+			System.out.println("Se ejecuto la sentencia");
+			ps.executeUpdate();
+			ps.close();
+
+
+		}catch(Exception e) {
+			System.out.println("Error "+e.getMessage());
+		}
+		finally {
+			con.close();
+		}
+		return rows;
+	}
+
+	public Padres BuscarPadre(int id) throws Exception{
+
+		sql = "SELECT * FROM padres WHERE idPadres="+id;
+		Padres Us= new Padres();
+
+		try {
+
+			con = C.conectar();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+
+				Us.setIdPadre(rs.getInt(1));
+				Us.setFKEstudiante(rs.getInt(2));
+				Us.setFKPadre(rs.getInt(3));
+
+			}
+
+			System.out.println("Se ejecuto la sentencia");
+			ps.close();
+
+		}catch(Exception e) {
+			System.out.println("Error "+e.getMessage());
+		}
+		finally {
+			con.close();
+		}
+
+		return Us;
+
+	}
+
 
 }

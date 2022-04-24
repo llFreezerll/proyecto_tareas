@@ -13,6 +13,7 @@ public class Rol {
 	
 	private int idRol;
 	private String nombreRol;
+	private boolean estadoRol;
 	String sql=null;
 	
 	Connection con;
@@ -21,7 +22,11 @@ public class Rol {
 		
 	Conexion C = new Conexion();
 	int rows;
-	
+
+	public boolean getEstadoRol() { return estadoRol; }
+
+	public void setEstadoRol(boolean estadoRol) { this.estadoRol = estadoRol; }
+
 	public int getIdRol() {return idRol;}
 	public void setIdRol(int idRol) {
 		this.idRol = idRol;
@@ -32,13 +37,14 @@ public class Rol {
 	}
 	
 	public int CrearRol(Rol Rol) throws SQLException {
-		sql = "INSERT INTO roles(NombreRol) VALUES (?)";
+		sql = "INSERT INTO roles(NombreRol, EstadoRol) VALUES (?,?)";
 		
 		try {
 			
 			con = C.conectar();
 			ps = con.prepareStatement(sql);
 			ps.setString(1, getNombreRol());
+			ps.setBoolean(2, getEstadoRol());
 			ps.executeUpdate(); 
 			ps.close();	
 			System.out.println("Se ejecuto la sentencia");

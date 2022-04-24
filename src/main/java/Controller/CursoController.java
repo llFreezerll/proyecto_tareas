@@ -139,7 +139,7 @@ public class CursoController extends HttpServlet {
         }catch (Exception e) {
             System.out.println("no se encontraron Cursos "+ e.getMessage());
         }finally {
-            // Us = null;
+             cu = null;
         }
 
     }

@@ -1,9 +1,6 @@
 package Controller;
 
-import Clases.Curso;
-import Clases.Estudiantes;
-import Clases.Padres;
-import Clases.Usuarios;
+import Clases.*;
 import Model.ConfigEmail;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -38,20 +35,20 @@ public class PadresController extends HttpServlet {
                     case "listar":
                         listar(request, response);
                         break;
-                   /*case "VistaAgregar":
-                        VistaAgregar(request,response);
-                        break;*/
+                   case "Editar":
+                       Editar(request,response);
+                        break;
                     case "Agregar":
                         Agregar(request,response);
                         break;
-                  /* case "Eliminar":
+                  case "Eliminar":
                         Eliminar(request,response);
-                        break;*/
+                        break;
                     case "Buscar":
                         Buscar(request,response);
                         break;
-                   /* case "Editar":
-                        Editar(request,response);*/
+                   case "BuscarEditar":
+                       BuscarEditar(request,response);
                     default:
                         response.sendRedirect("login.jsp");
                 }
@@ -188,6 +185,75 @@ public class PadresController extends HttpServlet {
             System.out.println("no se encontraron Usuarios "+ e.getMessage());
         }finally {
             // Us = null;
+        }
+
+    }
+
+    public void Eliminar(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+
+        Padres Padre = new Padres();
+
+        if (request.getParameter("id")!= null){
+            Padre.setIdPadre(Integer.parseInt(request.getParameter("id")));
+        }
+
+        try {
+            Padre.Eliminar(Padre.getIdPadre());
+            response.sendRedirect("PadresController?accion=listar");
+            System.out.println("se elimino roles");
+        }catch (Exception e) {
+            System.out.println("no se encontraron Roles "+ e.getMessage());
+        }finally {
+        }
+
+    }
+
+    public void Editar(HttpServletRequest request, HttpServletResponse response){
+
+        Padres Us = new Padres();
+
+            Us.setIdPadre(Integer.parseInt(request.getParameter("idPadre")));
+            Us.setFKEstudiante(Integer.parseInt(request.getParameter("CodigoEstudiante")));
+
+
+
+        try {
+            Us.Actualizar(Us);
+            response.sendRedirect("PadresController?accion=listar");
+            System.out.println("se envio al listado de Usuarios");
+        }catch (Exception e) {
+            System.out.println("no se encontraron "+ e.getMessage());
+        }finally {
+            Us = null;
+        }
+
+    }
+
+
+
+    public void BuscarEditar(HttpServletRequest request, HttpServletResponse response){
+
+        Padres pa = new Padres();
+        Usuarios Us = new Usuarios();
+        Usuarios User = new Usuarios();
+
+
+
+        int id =Integer.parseInt(request.getParameter("id"));
+
+
+        try {
+            pa= pa.BuscarPadre(id);
+            User = Us.ConsultarUsuario(pa.getFKPadre());
+            request.setAttribute("User", User);
+            request.setAttribute("Padre", pa);
+            request.getRequestDispatcher("views/PadresEditar.jsp").forward(request, response);
+            System.out.println("se envio al editor de Usuarios");
+
+        }catch (Exception e) {
+            System.out.println("no se encontraron Usuarios "+ e.getMessage());
+        }finally {
+             Us = null;
         }
 
     }

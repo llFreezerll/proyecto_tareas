@@ -9,8 +9,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import Clases.Rol;
+import Clases.Usuarios;
+import jakarta.servlet.http.HttpSession;
+
 
 @WebServlet(name = "RolController", value = "/RolController")
 public class RolController extends HttpServlet {
@@ -30,8 +32,8 @@ public class RolController extends HttpServlet {
                     case "AgregarRol":
                         AgregarRol(request,response);
                         break;
-                    case "EliminarRol":
-                        EliminarRol(request,response);
+                    case "Eliminar":
+                        Eliminar(request,response);
                         break;
                     case "BuscarRol":
                         BuscarRol(request,response);
@@ -93,6 +95,13 @@ public class RolController extends HttpServlet {
             rol.setNombreRol(request.getParameter("nombre"));
         }
 
+        if(request.getParameter("Estado")!=null){
+            rol.setEstadoRol(true);
+        }
+        else {
+            rol.setEstadoRol(false);
+        }
+
         try {
             rol.CrearRol(rol);
             response.sendRedirect("RolController?accion=listarRoles");
@@ -104,7 +113,7 @@ public class RolController extends HttpServlet {
 
     }
 
-    public void EliminarRol(HttpServletRequest request, HttpServletResponse response){
+    public void Eliminar(HttpServletRequest request, HttpServletResponse response){
 
         Rol rol = new Rol();
 

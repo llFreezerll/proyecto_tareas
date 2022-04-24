@@ -1,45 +1,63 @@
-<%@include file="Header.jsp"%>
+<%@include file="Header2.jsp"%>
 
 
 <body>
 
-<form method="post" action="PadresController?accion=Agregar">
 
-  <input type="text" name="idUsuario" value="${User.idUsuario}"/>
-  <input type="text" name="idUsuario2"/>
+<div style="
+     width: 100%;
+     min-height: 50vh;
+     display: -webkit-box;
+     display: -webkit-flex;
+     display: -moz-box;
+     display: -ms-flexbox;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     align-items: center;
+     padding: 15px;">
 
+  <form method="post" action="PadresController?accion=Agregar" >
 
-  <div class="mb-3">
-    <label for="Documento" class="form-label">Documento</label>
-    <input type="text" name="Documento" id="Documento" class="form-control" value="${User.documento}">
-  </div>
-
-  <div class="mb-3">
-    <label for="Nombre" class="form-label">Nombre</label>
-    <input type="text" name="Nombre" id="Nombre" class="form-control" value="${User.nombre}">
-  </div>
-
-  <div class="mb-3">
-    <label for="Apellido" class="form-label">Apellido</label>
-    <input type="text" name="Apellido" id="Apellido" class="form-control" value="${User.apellido}">
-  </div>
-
-  <div class="mb-3">
-    <label for="correo" class="form-label">Correo Electronico</label>
-    <input type="text" name="correo" id="correo" class="form-control" value="${User.correElectronico}">
-  </div>
-
-  <div class="mb-3">
-    <input type="checkbox" name="Creado" id="Creado" checked>
-  </div>
+    <input type="text" name="idUsuario" value="${User.idUsuario}" hidden/>
 
 
-  <button type="submit"> Crear Estudiante </button>
-  <a href="PadresController?accion=listar"> Cancelar </a>
+    <div class="card text-center bg-secondary" style="width: 30rem;align-items: center;display: flex;">
+      <div class="card-header" style="color: #FFFFFF">
+        Agregar Usuario
+      </div>
+      <div class="card-body bg-light mb-3" style="width: 25rem;display: grid;">
+        <h5 class="card-title">Esta Agregando un nuevo Padre</h5>
 
-</form>
+        <label for="idUsuario2" class="card-text" >Id del estudiante</label>
+        <input class="card-text" type="text" name="idUsuario2" id="idUsuario2"/>
+
+        <label class="card-text" >Documento: ${User.documento}</label>
+
+        <label class="card-text" >Nombre: ${User.nombre}</label>
+
+        <label class="card-text" >Apellido: ${User.apellido}</label>
+
+        <label class="card-text" >Correo electronico: ${User.correElectronico}</label>
+
+        <div hidden>
+          <input type="checkbox" name="Creado" id="Creado" checked>
+        </div>
+
+        <a style="padding: 3%">
+          <button type="submit" class="btn btn-primary"> Agregar Padre </button></a>
+        <div>
+          <a class="btn btn-primary" href="UsuarioController?accion=listar"> Cancelar </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </form>
+</div>
 
 </body>
 
 
-<%@include file="Footer.jsp"%>
+<%@include file="Footer2.jsp"%>

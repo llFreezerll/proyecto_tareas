@@ -1,11 +1,24 @@
-<%@include file="Header.jsp"%>
+<%@include file="Header2.jsp"%>
 
 
 <body>
-
+<div style="margin: 20px">
 <h1>Padres</h1>
 
-<table class="table table-hover table-bordered">
+  <div>
+    <form style="
+    width: max-content;
+    padding: 0 0 20px 10px;
+        ">
+      <label for="myInput" class="form-label"></label>
+      <input type="text" id="myInput" class="form-control" aria-describedby="passwordHelpBlock" onkeyup="myFunction()">
+      <div id="passwordHelpBlock" class="form-text">
+        Ingrese el documento del padre que desea buscar.
+      </div>
+    </form>
+  </div>
+
+<table class="table table-hover table-bordered" id="myTable">
 
   <tr>
     <th>Id</th>
@@ -38,13 +51,21 @@
       <td>${U.getEstudiantes().getCurso().grupo}</td>
 
       <c:if test="${users.getrol().nombreRol=='Administrador'}">
+      <td> </td>
         <td>
-          <a rol="Button" class="" href="UsuarioController?accion=Buscar&id=${U.getIdUsuario()}"> Editar Rol</a>
-        </td>
-        <td>
-          <a rol="Button" class="" href="UsuarioController?accion=Eliminar&id=${U.getIdUsuario()}"> Borrar Usuario</a>
-        </td>
+          <a rol="button"
+             class="btn btn-warning"
+             href="PadresController?accion=BuscarEditar&id=${U.getIdPadre()}">
+            <i class="bi bi-pencil"></i>
+          </a>
 
+          <a rol="button"
+             class="btn btn-danger"
+             onclick="borrar(event,${U.getIdPadre()},'Padres')">
+            <i class="bi bi-trash"></i>
+          </a>
+
+        </td>
 
        </c:if>
   </tr>
@@ -53,7 +74,31 @@
 
 
 </table>
+
+</div>
+
+
+<script>
+  function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
 </body>
 
 
-<%@include file="Footer.jsp"%>
+<%@include file="Footer2.jsp"%>
